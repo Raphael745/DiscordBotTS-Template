@@ -1,0 +1,19 @@
+{
+  "name": "discord-bot-template",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "Une base de bot Discord, conçue pour être facilement étendue.",
+  "dependencies": {
+    "ascii-table3": "^1.0.1",
+    "chalk": "^5.6.2",
+    "discord.js": "^14.25.1",
+    "dotenv": "^17.3.1",
+    "glob": "^13.0.3"
+  }
+}
