@@ -1,6 +1,6 @@
-# DiscordBotJS Template
+# DiscordBotTS Template
 
-Une base de bot Discord en Javascript. Inclut un système de chargement des commandes et événements, une gestion des logs avancée avec support du débogage, et une architecture prête pour vos projets. Développez rapidement votre bot avec cette template.
+Une base de bot Discord en TypeScript. Inclut un système de chargement des commandes et événements, une gestion des logs avancée avec support du débogage, et une architecture prête pour vos projets. Développez rapidement votre bot avec cette template.
 
 ## Table des matières
 - [Installation](#installation)
@@ -16,6 +16,12 @@ Pour commencer, clonez ce dépôt et installez les dépendances :
 git clone https://github.com/Raphael745/DiscordBotJS-Template.git
 cd DiscordBotJS-Template
 npm install
+```
+
+Ensuite, compilez le projet TypeScript en JavaScript :
+
+```bash
+npm run build
 ```
 
 ## Configuration
@@ -49,14 +55,16 @@ Le fichier `config.json` contient des paramètres globaux pour le bot. Actuellem
 
 ## Lancement du Bot
 
-Pour lancer le bot, exécutez la commande suivante :
+Pour lancer le bot en production (après compilation) :
 
 ```bash
-node index.js
-```
-Ou si vous avez configuré un script de démarrage dans `package.json` :
-```bash
 npm start
+```
+
+Pour le développement (avec rechargement automatique et exécution directe des fichiers TypeScript) :
+
+```bash
+npm run dev
 ```
 
 ## Système de Débogage

@@ -1,24 +1,25 @@
-const logger = require('../utils/logger');
-const { MessageFlags } = require('discord.js');
+import logger from '../utils/logger';
+import { MessageFlags, CommandInteraction, Client, Interaction, BitField } from 'discord.js';
 
-module.exports = {
+export default {
     name: 'interactionCreate',
-    async execute(interaction) {
-        logger.debug(`Interaction reçue : ${interaction.id}, type : ${interaction.type}`);
+    async execute(interaction: CommandInteraction) {
+        logger.debug(`Interaction reçue : ${(interaction as Interaction).id}, type : ${interaction.type}`);
         if (!interaction.isCommand()) {
-            logger.debug(`Interaction non-commande filtrée : ${interaction.id}`);
+            logger.debug(`Interaction non-commande filtrée : ${(interaction as Interaction).id}`);
             return;
         }
 
-        logger.debug(`Commande slash reçue : ${interaction.commandName} (${interaction.id})`);
-        await interaction.deferReply({ flags: [MessageFlags.Ephemeral] });
-        logger.debug(`Réponse différée pour la commande ${interaction.commandName} (${interaction.id})`);
+        logger.debug(`Commande slash reçue : ${interaction.commandName} (${(interaction as Interaction).id})`);
+        await interaction.deferReply({ flags: MessageFlags.Ephemeral });
+        logger.debug(`Réponse différée pour la commande ${interaction.commandName} (${(interaction as Interaction).id})`);
 
-        const command = interaction.client.commands.get(interaction.commandName);
+        const client = interaction.client as Client;
+        const command = client.commands.get(interaction.commandName);
 
         if (!command) {
             logger.warn(`Aucune commande correspondant à ${interaction.commandName} n'a été trouvée.`);
-            return interaction.editReply({ content: 'Cette commande n\'existe pas.', flags: [MessageFlags.Ephemeral] });
+            return interaction.editReply({ content: 'Cette commande n\'existe pas.', flags: MessageFlags.Ephemeral as number });
         }
 
         try {
@@ -32,7 +33,7 @@ module.exports = {
                 await interaction.followUp({ content: 'Une erreur est survenue lors de l\'exécution de cette commande.', flags: [MessageFlags.Ephemeral] });
             } else {
                 logger.debug(`Tentative de editReply après erreur pour ${interaction.commandName} (${interaction.id})`);
-                await interaction.editReply({ content: 'Une erreur est survenue lors de l\'exécution de cette commande.', flags: [MessageFlags.Ephemeral] });
+                await interaction.editReply({ content: 'Une erreur est survenue lors de l\'exécution de cette commande.', flags: MessageFlags.Ephemeral as number });
             }
         }
     },

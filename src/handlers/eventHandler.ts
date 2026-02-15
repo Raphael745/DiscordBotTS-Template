@@ -1,32 +1,33 @@
-const { glob } = require('glob');
-const path = require('path');
-const logger = require('../utils/logger');
-const chalk = require('chalk').default;
+import { glob } from 'glob';
+import path from 'path';
+import logger from '../utils/logger';
+import chalk from 'chalk';
+import { Client, Collection } from 'discord.js';
 
-module.exports = async (client) => {
+export default async (client: Client) => {
     logger.debug('Démarrage du gestionnaire d\'événements.');
-    const eventFiles = await glob(`${process.cwd()}/src/events/**/*.js`);
+    const eventFiles = await glob(`${process.cwd()}/dist/events/**/*.js`);
     logger.debug(`Trouvé ${eventFiles.length} fichiers d'événements.`);
-    client.events = new Map();
-    const loadedEventNames = [];
+    client.events = new Collection();
+    const loadedEventNames: [string, string][] = [];
 
     for (const file of eventFiles) {
         logger.debug(`Tentative de chargement du fichier d'événement : ${file}`);
         try {
-            const event = require(path.resolve(file));
+            const event = (await import(path.resolve(file))).default;
             logger.debug(`Événement chargé : ${event.name} depuis ${file}`);
             if (event.once) {
-                client.once(event.name, (...args) => event.execute(...args, client));
+                client.once(event.name, (...args: any[]) => event.execute(...args, client));
                 logger.debug(`Événement '${event.name}' enregistré comme 'once'.`);
             } else {
-                client.on(event.name, (...args) => event.execute(...args, client));
+                client.on(event.name, (...args: any[]) => event.execute(...args, client));
                 logger.debug(`Événement '${event.name}' enregistré comme 'on'.`);
             }
             client.events.set(event.name, event);
             loadedEventNames.push([event.name, event.once ? 'Une fois' : 'Toujours']);
-        } catch (error) {
-            logger.error(`Erreur lors du chargement de l'événement depuis ${file}: ${error.message}`);
-            logger.debug(`Détails de l'erreur de chargement de l'événement : ${error.stack}`);
+        } catch (error: unknown) {
+            logger.error(`Erreur lors du chargement de l'événement depuis ${file}: ${(error as Error).message}`);
+            logger.debug(`Détails de l'erreur de chargement de l'événement : ${(error as Error).stack}`);
         }
     }
 

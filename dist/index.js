@@ -5,10 +5,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 require("dotenv/config");
 const discord_js_1 = require("discord.js");
-const logger_1 = __importDefault(require("./src/utils/logger"));
-const eventHandler_1 = __importDefault(require("./src/handlers/eventHandler"));
-const commandHandler_1 = __importDefault(require("./src/handlers/commandHandler"));
-const config_json_1 = __importDefault(require("./config.json"));
+const logger_1 = __importDefault(require("./utils/logger"));
+const eventHandler_1 = __importDefault(require("./handlers/eventHandler"));
+const commandHandler_1 = __importDefault(require("./handlers/commandHandler"));
+const config_json_1 = __importDefault(require("../config.json"));
 const client = new discord_js_1.Client({
     intents: [
         discord_js_1.GatewayIntentBits.Guilds,

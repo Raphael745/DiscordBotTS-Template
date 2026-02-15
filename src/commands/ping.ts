@@ -1,11 +1,11 @@
-const { SlashCommandBuilder } = require('discord.js');
-const logger = require('../utils/logger');
+import { SlashCommandBuilder, CommandInteraction } from 'discord.js';
+import logger from '../utils/logger';
 
-module.exports = {
+export default {
     data: new SlashCommandBuilder()
         .setName('ping')
         .setDescription('Répond avec Pong !'),
-    async execute(interaction) {
+    async execute(interaction: CommandInteraction) {
         logger.debug(`Exécution de la commande 'ping' par ${interaction.user.tag}.`);
         await interaction.editReply('Pong!');
     },
