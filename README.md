@@ -13,7 +13,7 @@ Une base de bot Discord en TypeScript. Inclut un système de chargement des comm
 Pour commencer, clonez ce dépôt et installez les dépendances :
 
 ```bash
-git clone https://github.com/Raphael745/DiscordBotJS-Template.git
+git clone https://github.com/Raphael745/DiscordBotTS-Template.git
 cd DiscordBotJS-Template
 npm install
 ```
