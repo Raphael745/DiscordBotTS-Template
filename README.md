@@ -14,7 +14,7 @@ Pour commencer, clonez ce dépôt et installez les dépendances :
 
 ```bash
 git clone https://github.com/Raphael745/DiscordBotTS-Template.git
-cd DiscordBotJS-Template
+cd DiscordBotTS-Template
 npm install
 ```
 
